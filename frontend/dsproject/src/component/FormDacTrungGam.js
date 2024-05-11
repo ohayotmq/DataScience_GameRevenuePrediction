@@ -1,5 +1,7 @@
-import React from 'react';
-import { Button, Form, Input, Select, Space, DatePicker } from 'antd';
+import React, { useState } from 'react';
+import { Button, Form, Input, Select, Space, DatePicker, Table } from 'antd';
+import moment from 'moment';
+
 const { Option } = Select;
 const layout = {
   labelCol: {
@@ -15,96 +17,120 @@ const tailLayout = {
     span: 16,
   },
 };
+
 function FormDacTrungGame() {
   const [form] = Form.useForm();
+  const [tableData, setTableData] = useState([]);
+  const [showTable, setShowTable] = useState(false);
 
   const onFinish = values => {
     console.log(values);
-  };
-  const onReset = () => {
+    setTableData(prevData => [...prevData, values]);
+    setShowTable(true);
     form.resetFields();
   };
 
+  const formatDate = date => {
+    return moment(date).format('MM/YYYY');
+  };
+
+  const columns = [
+    {
+      title: 'Game',
+      dataIndex: 'Game',
+      key: 'Game',
+    },
+    {
+      title: 'Genre',
+      dataIndex: 'genre',
+      key: 'genre',
+    },
+    {
+      title: 'Release Date',
+      dataIndex: 'ReleaseDate',
+      key: 'ReleaseDate',
+      render: formatDate, // Sử dụng hàm formatDate để định dạng giá trị ngày tháng
+    },
+    {
+      title: 'Predicted sales',
+      dataIndex: 'Predicted sales',
+      key: 'Predicted sales',
+      render: (text, record) => <span className="predicted-sales">{text}</span>,
+    },
+    {
+      title: 'Point evaluation',
+      dataIndex: 'Point evaluation',
+      key: 'Point evaluation',
+      render: (text, record) => (
+        <span className="point-evaluation">{text}</span>
+      ),
+    },
+  ];
+
   return (
-    <Form
-      {...layout}
-      form={form}
-      name="control-hooks"
-      onFinish={onFinish}
-      style={{
-        maxWidth: 600,
-      }}>
-      <Form.Item
-        name="Game"
-        label="Game"
-        rules={[
-          {
-            required: true,
-          },
-        ]}>
-        <Input />
-      </Form.Item>
-      <Form.Item
-        name="genre"
-        label="Genre"
-        rules={[
-          {
-            required: true,
-          },
-        ]}>
-        <Select
-          placeholder="Select a option and change input text above"
-          allowClear>
-          <Option value="RPG">RPG</Option>
-          <Option value="Sports">Sports</Option>
-          <Option value="Adventure">Adventure</Option>
-          <Option value="Action">Action</Option>
-          <Option value="Strategy">Strategy</Option>
-          <Option value="Fighting">Fighting</Option>
-          <Option value="other">other</Option>
-        </Select>
-      </Form.Item>
-      <Form.Item
-        noStyle
-        shouldUpdate={(prevValues, currentValues) =>
-          prevValues.gender !== currentValues.gender
-        }>
-        {({ getFieldValue }) =>
-          getFieldValue('gender') === 'other' ? (
-            <Form.Item
-              name="customizeGender"
-              label="Customize Gender"
-              rules={[
-                {
-                  required: true,
-                },
-              ]}>
-              <Input />
-            </Form.Item>
-          ) : null
-        }
-      </Form.Item>
-      <Form.Item
-        name="Release Date"
-        label="Release Date"
-        rules={[
-          {
-            required: true,
-          },
-        ]}>
-        <DatePicker picker="month" format="MM/YYYY" />
-      </Form.Item>
-      <Form.Item {...tailLayout}>
-        <Space>
-          <Button type="primary" htmlType="submit">
-            Submit
-          </Button>
-          <Button htmlType="button" onClick={onReset}>
-            Reset
-          </Button>
-        </Space>
-      </Form.Item>
-    </Form>
+    <>
+      <Form
+        {...layout}
+        form={form}
+        name="control-hooks"
+        onFinish={onFinish}
+        style={{
+          maxWidth: 600,
+        }}>
+        <Form.Item
+          name="Game"
+          label="Game"
+          rules={[
+            {
+              required: true,
+            },
+          ]}>
+          <Input />
+        </Form.Item>
+        <Form.Item
+          name="genre"
+          label="Genre"
+          rules={[
+            {
+              required: true,
+            },
+          ]}>
+          <Select
+            placeholder="Select a option and change input text above"
+            allowClear>
+            <Option value="RPG">RPG</Option>
+            <Option value="Sports">Sports</Option>
+            <Option value="Adventure">Adventure</Option>
+            <Option value="Action">Action</Option>
+            <Option value="Strategy">Strategy</Option>
+            <Option value="Fighting">Fighting</Option>
+            <Option value="other">other</Option>
+          </Select>
+        </Form.Item>
+        <Form.Item
+          name="ReleaseDate"
+          label="Release Date"
+          rules={[
+            {
+              required: true,
+            },
+          ]}>
+          <DatePicker picker="month" format="MM/YYYY" />
+        </Form.Item>
+        <Form.Item {...tailLayout}>
+          <Space>
+            <Button type="primary" htmlType="submit">
+              Submit
+            </Button>
+            <Button htmlType="button" onClick={() => form.resetFields()}>
+              Reset
+            </Button>
+          </Space>
+        </Form.Item>
+      </Form>
+      {showTable && <Table columns={columns} dataSource={tableData} />}
+    </>
   );
 }
+
 export default FormDacTrungGame;

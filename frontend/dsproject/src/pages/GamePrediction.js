@@ -43,30 +43,42 @@ export default function GamePrediction() {
   return (
     <div
       style={{
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'flex-start',
         width: 300,
       }}>
-      <Button
-        type="primary"
-        onClick={toggleCollapsed}
-        style={{
-          marginBottom: 16,
-        }}>
-        {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-      </Button>
       <Menu
         defaultSelectedKeys={['1']}
         defaultOpenKeys={['sub1']}
         mode="inline"
         theme="dark"
         inlineCollapsed={collapsed}
-        onClick={handleMenuClick}>
+        onClick={handleMenuClick}
+        style={{
+          flex: '0 0 auto', // Không co giãn Menu khi thay đổi kích thước
+        }}>
         {items.map(item => (
           <Item key={item.key} icon={item.icon}>
             {item.label}
           </Item>
         ))}
       </Menu>
-      {renderForm()}
+      <div
+        style={{
+          flex: '1', // Phần còn lại của layout sẽ được phần đóng
+          marginLeft: 20, // Khoảng cách giữa Menu và Form
+        }}>
+        <Button
+          type="primary"
+          onClick={toggleCollapsed}
+          style={{
+            marginBottom: 16,
+          }}>
+          {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+        </Button>
+        {renderForm()}
+      </div>
     </div>
   );
 }
