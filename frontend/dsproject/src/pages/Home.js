@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Table, Input, Space } from 'antd';
+import { Table, Input } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 
 const { Column } = Table;
@@ -36,144 +36,68 @@ const data = [
 
 const Home = () => {
   const [searchText, setSearchText] = useState('');
-  const [searchedColumn, setSearchedColumn] = useState('');
 
-  const getColumnSearchProps = (dataIndex) => ({
-    filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
-      <div style={{ padding: 8 }}>
-        <Input
-          placeholder={`Search ${dataIndex}`}
-          value={selectedKeys[0]}
-          onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])}
-          onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
-          style={{ marginBottom: 8, display: 'block' }}
-        />
-        <Space>
-          <button onClick={() => handleReset(clearFilters)} style={{ width: 90 }}>
-            Reset
-          </button>
-          <button
-            type="primary"
-            onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
-            icon={<SearchOutlined />}
-            style={{ width: 90 }}
-          >
-            Search
-          </button>
-        </Space>
-      </div>
-    ),
-    filterIcon: (filtered) => <SearchOutlined style={{ color: filtered ? '#1890ff' : undefined }} />,
-    onFilter: (value, record) =>
-      record[dataIndex].toString().toLowerCase().includes(value.toLowerCase()),
-    onFilterDropdownVisibleChange: (visible) => {
-      if (visible) {
-        setTimeout(() => document.getElementById('search-input').select(), 100);
-      }
-    },
-    render: (text) =>
-      searchedColumn === dataIndex ? (
-        <span style={{ backgroundColor: '#ffc069' }}>{text}</span>
-      ) : (
-        text
-      ),
-  });
-
-  const handleSearch = (selectedKeys, confirm, dataIndex) => {
-    confirm();
-    setSearchText(selectedKeys[0]);
-    setSearchedColumn(dataIndex);
+  const handleSearch = (value) => {
+    setSearchText(value);
   };
 
-  const handleReset = (clearFilters) => {
-    clearFilters();
-    setSearchText('');
+  const filteredData = data.filter(
+    (item) =>
+      item.game.toLowerCase().includes(searchText.toLowerCase()) ||
+      item.publisher.toLowerCase().includes(searchText.toLowerCase())
+  );
+  const sorterDate = (a, b) => {
+    const dateA = new Date(a);
+    const dateB = new Date(b);
+    return dateA - dateB;
   };
-
-  const handleTableSearch = (selectedKeys, confirm) => {
-    confirm();
-    setSearchText(selectedKeys[0]);
-  };
-
-  const handleTableReset = (clearFilters) => {
-    clearFilters();
-    setSearchText('');
-  };
-
-  const getColumnSearchPropsForAllColumns = () => ({
-    filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
-      <div style={{ padding: 8 }}>
-        <Input
-          placeholder={`Search all columns`}
-          value={selectedKeys[0]}
-          onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])}
-          onPressEnter={() => handleTableSearch(selectedKeys, confirm)}
-          style={{ marginBottom: 8, display: 'block' }}
-        />
-        <Space>
-          <button onClick={() => handleTableReset(clearFilters)} style={{ width: 90 }}>
-            Reset
-          </button>
-          <button
-            type="primary"
-            onClick={() => handleTableSearch(selectedKeys, confirm)}
-            icon={<SearchOutlined />}
-            style={{ width: 90 }}
-          >
-            Search
-          </button>
-        </Space>
-      </div>
-    ),
-    filterIcon: (filtered) => <SearchOutlined style={{ color: filtered ? '#1890ff' : undefined }} />,
-    onFilterDropdownVisibleChange: (visible) => {
-      if (visible) {
-        setTimeout(() => document.getElementById('search-input').select(), 100);
-      }
-    },
-    render: (text) => (searchText ? <span>{text}</span> : text),
-  });
+  
 
   return (
     <div>
       <Search
-        id="search-input"
         placeholder="Search"
         allowClear
         enterButton
         value={searchText}
         onChange={(e) => setSearchText(e.target.value)}
+        onSearch={handleSearch}
       />
-      <Table dataSource={data} rowKey="key">
+      <Table dataSource={filteredData} rowKey="key">
         <Column
           title="Game"
           dataIndex="game"
           key="game"
-          {...getColumnSearchProps('game')}
         />
         <Column
           title="Console"
           dataIndex="console"
           key="console"
-          {...getColumnSearchProps('console')}
+          filters={[
+            { text: 'All', value: 'All' },
+            { text: 'PC', value: 'PC' },
+            { text: 'PS4', value: 'PS4' },
+            { text: 'XBOX', value: 'XBOX' },
+            { text: 'NINTENDO', value: 'NINTENDO' },
+          ]}
+          onFilter={(value, record) => record.console.indexOf(value) === 0}
         />
         <Column
           title="Publisher"
           dataIndex="publisher"
           key="publisher"
-          {...getColumnSearchProps('publisher')}
         />
         <Column
           title="Release Date"
           dataIndex="releaseDate"
           key="releaseDate"
-          {...getColumnSearchProps('releaseDate')}
+          sorter={(a, b) => sorterDate(a.releaseDate, b.releaseDate)}
         />
         <Column
-          title="Last"
+          title="Last Update"
           dataIndex="last"
           key="last"
-          {...getColumnSearchProps('last')}
+          sorter={(a, b) => sorterDate(a.last, b.last)}
         />
         <Column
           title="Score"
