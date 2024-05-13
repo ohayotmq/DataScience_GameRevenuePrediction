@@ -16,7 +16,24 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from mainApp import views
+import threading
+import globalVar
 
 urlpatterns = [
+    path('', views.test),
     path('admin/', admin.site.urls),
+    path('scraped-data/', views.scrapedGameData),
 ]
+
+def runScheduledTask():
+    # cao data va luu vao file csv
+    globalVar.scrapedFile = 'newFile.csv'
+
+    # huan luyen mo hinh
+    globalVar.model = None
+
+    # repeat after 7 days
+    threading.Timer(3600*24*7, runScheduledTask).start()
+
+runScheduledTask()

@@ -1,0 +1,2 @@
+model = None
+scrapedFile = None
