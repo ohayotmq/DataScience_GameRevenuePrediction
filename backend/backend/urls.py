@@ -17,6 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from mainApp import views
+import os
+from django.conf import settings
 import threading
 import globalVar
 
@@ -28,7 +30,7 @@ urlpatterns = [
 
 def runScheduledTask():
     # cao data va luu vao file csv
-    globalVar.scrapedFile = 'newFile.csv'
+    globalVar.scrapedFileName = os.path.join(settings.BASE_DIR, 'game_info_cleaned.csv')
 
     # huan luyen mo hinh
     globalVar.model = None

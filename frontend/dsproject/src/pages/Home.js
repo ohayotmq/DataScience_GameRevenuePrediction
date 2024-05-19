@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Table, Input } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
+import scrapedData from '../service/scrapedData';
 
 const { Column } = Table;
 const { Search } = Input;
@@ -36,9 +37,32 @@ const data = [
 
 const Home = () => {
   const [searchText, setSearchText] = useState('');
-
-  const handleSearch = (value) => {
+  const [resRows, setResRows] = useState() 
+  const [pagination, setPagination] = useState({
+    current: 1,
+    pageSize: 10,
+    total: 0,
+  })
+  async function fetchData(searchText, page){
+    const respond = await scrapedData.get(searchText,page)
+    console.log(respond);
+    setResRows(respond.results.map((row)=>{return{
+      game: row.Title,
+    console: row.Console,
+    publisher: row.Publisher,
+    releaseDate: row['Release Year']+'-'+row['Release Month'],
+    // last: '2023-02-01',
+    // score: 100,
+    naRevenue: row['NA Sales (m)'],
+    jpRevenue: row['JP Sales (m)'],
+    euRevenue: row['EU Sales (m)'],
+    totalRevenue: row['Total Sales (m)'],
+    }}))
+    setPagination({...pagination, total: respond.count,current:page})
+  }
+  const handleSearch = async (value) => {
     setSearchText(value);
+    fetchData(value, 1)
   };
 
   const filteredData = data.filter(
@@ -52,6 +76,7 @@ const Home = () => {
     return dateA - dateB;
   };
   
+  useEffect(()=>{fetchData('',1)},[])
 
   return (
     <div>
@@ -63,7 +88,9 @@ const Home = () => {
         onChange={(e) => setSearchText(e.target.value)}
         onSearch={handleSearch}
       />
-      <Table dataSource={filteredData} rowKey="key">
+      <Table dataSource={resRows} rowKey="game" pagination={pagination} onChange={(pagi)=>{
+        fetchData(searchText,pagi.current)
+      }}>
         <Column
           title="Game"
           dataIndex="game"
@@ -93,18 +120,18 @@ const Home = () => {
           key="releaseDate"
           sorter={(a, b) => sorterDate(a.releaseDate, b.releaseDate)}
         />
-        <Column
+        {/* <Column
           title="Last Update"
           dataIndex="last"
           key="last"
           sorter={(a, b) => sorterDate(a.last, b.last)}
-        />
-        <Column
+        /> */}
+        {/* <Column
           title="Score"
           dataIndex="score"
           key="score"
           sorter={(a, b) => a.score - b.score}
-        />
+        /> */}
         <Column
           title="NA Revenue"
           dataIndex="naRevenue"

@@ -1,2 +1,2 @@
 model = None
-scrapedFile = None
+scrapedFileName = None
