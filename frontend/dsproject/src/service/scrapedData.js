@@ -7,7 +7,7 @@ async function get(searchText, page){
         url: '/scraped-data',
         params: {searchText, page}
     })
-    console.log(data);
+    // console.log(data);
     return data
 }
 

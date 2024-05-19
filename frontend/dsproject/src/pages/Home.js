@@ -6,35 +6,6 @@ import scrapedData from '../service/scrapedData';
 const { Column } = Table;
 const { Search } = Input;
 
-const data = [
-  {
-    key: '1',
-    game: 'Game A',
-    console: 'Console A',
-    publisher: 'Publisher A',
-    releaseDate: '2022-01-01',
-    last: '2022-02-01',
-    score: 90,
-    naRevenue: 100,
-    jpRevenue: 80,
-    euRevenue: 120,
-    totalRevenue: 300,
-  },
-  {
-    key: '2',
-    game: 'Game B',
-    console: 'Console B',
-    publisher: 'Publisher B',
-    releaseDate: '2023-01-01',
-    last: '2023-02-01',
-    score: 100,
-    naRevenue: 200,
-    jpRevenue: 700,
-    euRevenue: 70,
-    totalRevenue: 400,
-  },
-];
-
 const Home = () => {
   const [searchText, setSearchText] = useState('');
   const [resRows, setResRows] = useState() 
@@ -47,6 +18,7 @@ const Home = () => {
     const respond = await scrapedData.get(searchText,page)
     console.log(respond);
     setResRows(respond.results.map((row)=>{return{
+      key: row.Title+row.Console,
       game: row.Title,
     console: row.Console,
     publisher: row.Publisher,
@@ -65,18 +37,14 @@ const Home = () => {
     fetchData(value, 1)
   };
 
-  const filteredData = data.filter(
-    (item) =>
-      item.game.toLowerCase().includes(searchText.toLowerCase()) ||
-      item.publisher.toLowerCase().includes(searchText.toLowerCase())
-  );
   const sorterDate = (a, b) => {
     const dateA = new Date(a);
     const dateB = new Date(b);
     return dateA - dateB;
   };
   
-  useEffect(()=>{fetchData('',1)},[])
+  useEffect(()=>{
+    fetchData('',1)},[])
 
   return (
     <div>
@@ -88,7 +56,7 @@ const Home = () => {
         onChange={(e) => setSearchText(e.target.value)}
         onSearch={handleSearch}
       />
-      <Table dataSource={resRows} rowKey="game" pagination={pagination} onChange={(pagi)=>{
+      <Table dataSource={resRows} rowKey="key" pagination={pagination} onChange={(pagi)=>{
         fetchData(searchText,pagi.current)
       }}>
         <Column
