@@ -1,2 +1,2 @@
-model = None
 scrapedFileName = None
+modelFileName = None

@@ -26,6 +26,7 @@ urlpatterns = [
     path('', views.test),
     path('admin/', admin.site.urls),
     path('scraped-data/', views.scrapedGameData),
+    path('predict-1/', views.predict1),
 ]
 
 def runScheduledTask():
@@ -33,7 +34,7 @@ def runScheduledTask():
     globalVar.scrapedFileName = os.path.join(settings.BASE_DIR, 'game_info_cleaned.csv')
 
     # huan luyen mo hinh
-    globalVar.model = None
+    globalVar.modelFileName = os.path.join(settings.BASE_DIR, 'Model/regressor_multiLinear.joblib')
 
     # repeat after 7 days
     threading.Timer(3600*24*7, runScheduledTask).start()

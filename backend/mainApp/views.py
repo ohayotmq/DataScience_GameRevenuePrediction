@@ -6,7 +6,7 @@ from django.http import JsonResponse
 from rest_framework.decorators import api_view
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
-
+import joblib
 import globalVar
 # Create your views here.
 
@@ -30,7 +30,18 @@ def scrapedGameData(request):
     
     # Return paginated response
     return paginator.get_paginated_response(result_page)
-    
+
+
+@api_view(['GET'])
+def predict1(request):
+    print('here111')
+    model = joblib.load(globalVar.modelFileName)
+    x = [[float(request.GET.get('NA_sales')),float(request.GET.get('EU_sales')),
+          float(request.GET.get('JP_sales')),float(request.GET.get('otherSales')),
+          int(request.GET.get('releaseMonth')),int(request.GET.get('releaseYear'))]]
+    y = model.predict(x)
+    return JsonResponse({'totalSales': y[0]})
+
 def test(request):
     print('ping test route')
     return HttpResponse('<div>Hi</div>')
