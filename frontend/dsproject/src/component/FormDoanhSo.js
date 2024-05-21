@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import { Button, Form, Input, Select, Space, Table } from 'antd';
-import './Form.css';
+import React, { useState } from "react";
+import { Button, Form, Input, Select, Space, Table } from "antd";
+import "./Form.css";
+import predictSales from "../service/predict_1";
 
 const { Option } = Select;
 const layout = {
@@ -23,52 +24,65 @@ function FormDoanhSo() {
   const [tableData, setTableData] = useState([]);
   const [showTable, setShowTable] = useState(false);
 
-  const onFinish = values => {
+  const onFinish = async (values) => {
     console.log(values);
-    setTableData(prevData => [...prevData, values]);
-    setShowTable(true);
+
+    const salesData = {
+      NA_sales: parseFloat(values.NARevenue),
+      EU_sales: parseFloat(values.EURevenue),
+      JP_sales: parseFloat(values.JPRevenue),
+      otherSales: 0,
+      releaseMonth: 1,
+      releaseYear: 2022,
+    };
+
+    try {
+      const predictedSales = await predictSales(salesData);
+
+      // Thêm dữ liệu và kết quả dự đoán vào bảng
+      setTableData((prevData) => [
+        ...prevData,
+        { ...values, "Predicted sales": predictedSales },
+      ]);
+      setShowTable(true);
+    } catch (error) {
+      console.error("Error predicting sales:", error);
+    }
+
     form.resetFields();
   };
 
   const columns = [
     {
-      title: 'Game',
-      dataIndex: 'Game',
-      key: 'Game',
+      title: "Game",
+      dataIndex: "Game",
+      key: "Game",
     },
     {
-      title: 'Genre',
-      dataIndex: 'genre',
-      key: 'genre',
+      title: "Genre",
+      dataIndex: "genre",
+      key: "genre",
     },
     {
-      title: 'NA Revenue',
-      dataIndex: 'NARevenue',
-      key: 'NARevenue',
+      title: "NA Revenue",
+      dataIndex: "NARevenue",
+      key: "NARevenue",
     },
     {
-      title: 'JP Revenue',
-      dataIndex: 'JPRevenue',
-      key: 'JPRevenue',
+      title: "JP Revenue",
+      dataIndex: "JPRevenue",
+      key: "JPRevenue",
     },
     {
-      title: 'EU Revenue',
-      dataIndex: 'EURevenue',
-      key: 'EURevenue',
+      title: "EU Revenue",
+      dataIndex: "EURevenue",
+      key: "EURevenue",
     },
     {
-      title: 'Predicted sales',
-      dataIndex: 'Predicted sales',
-      key: 'Predicted sales',
-      render: (text, record) => <span className="predicted-sales">{text}</span>,
-    },
-    {
-      title: 'Point evaluation',
-      dataIndex: 'Point evaluation',
-      key: 'Point evaluation',
-      render: (text, record) => (
-        <span className="point-evaluation">{text}</span>
-      ),
+      title: "Predicted sales",
+      dataIndex: "Predicted sales",
+      key: "Predicted sales",
+      render: (text) => <span className="predicted-sales">{text}</span>,
     },
   ];
 
@@ -81,7 +95,8 @@ function FormDoanhSo() {
         onFinish={onFinish}
         style={{
           maxWidth: 600,
-        }}>
+        }}
+      >
         <Form.Item
           name="Game"
           label="Game"
@@ -89,7 +104,8 @@ function FormDoanhSo() {
             {
               required: true,
             },
-          ]}>
+          ]}
+        >
           <Input />
         </Form.Item>
         <Form.Item
@@ -99,10 +115,12 @@ function FormDoanhSo() {
             {
               required: true,
             },
-          ]}>
+          ]}
+        >
           <Select
             placeholder="Select a option and change input text above"
-            allowClear>
+            allowClear
+          >
             <Option value="RPG">RPG</Option>
             <Option value="Sports">Sports</Option>
             <Option value="Adventure">Adventure</Option>
@@ -119,7 +137,8 @@ function FormDoanhSo() {
             {
               required: true,
             },
-          ]}>
+          ]}
+        >
           <Input />
         </Form.Item>
         <Form.Item
@@ -129,7 +148,8 @@ function FormDoanhSo() {
             {
               required: true,
             },
-          ]}>
+          ]}
+        >
           <Input />
         </Form.Item>
         <Form.Item
@@ -139,7 +159,8 @@ function FormDoanhSo() {
             {
               required: true,
             },
-          ]}>
+          ]}
+        >
           <Input />
         </Form.Item>
         <Form.Item {...tailLayout}>
