@@ -60,6 +60,7 @@ opt-einsum==3.3.0
 packaging==23.1
 pandas==2.2.2
 parso==0.8.4
+patsy==0.5.6
 pd==0.0.4
 pexpect==4.9.0
 Pillow==9.5.0
@@ -246,6 +247,7 @@ six==1.16.0
 soupsieve==2.5
 sqlparse==0.5.0
 stack-data==0.6.3
+statsmodels==0.14.2
 tensorboard==2.13.0
 tensorboard-data-server==0.7.0
 tensorflow==2.13.0rc1
