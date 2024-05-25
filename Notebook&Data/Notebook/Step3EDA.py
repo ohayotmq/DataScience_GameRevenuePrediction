@@ -414,4 +414,5 @@ def Step3EDA():
 
 
 #Call file step chạy bằng câu gọi hàm bên dưới
-#Step3EDA()
+
+Step3EDA()
