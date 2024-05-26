@@ -92,6 +92,6 @@ def train_model_prediction2():
     return listModel
 
 
-list = train_model_prediction2()
+# list = train_model_prediction2()
 
-print(list)
+# print(list)
