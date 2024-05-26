@@ -14,10 +14,13 @@ def train(x_train, y_train, x_test, y_test, path_fig, path_model):
     sc_x = StandardScaler()
     x_train = sc_x.fit_transform(x_train)
     x_test = sc_x.transform(x_test)
-    sc_y = StandardScaler()
-    y_train = sc_y.fit_transform(np.reshape(y_train,(len(y_train),1)))
-    y_test = sc_y.transform(np.reshape(y_test,(len(y_test),1)))
+    # sc_y = StandardScaler()
+    # y_train = sc_y.fit_transform(np.reshape(y_train,(len(y_train),1)))
+    # y_test = sc_y.transform(np.reshape(y_test,(len(y_test),1)))
 
+
+    y_train = np.reshape(y_train,(len(y_train),1))
+    y_test = np.reshape(y_test,(len(y_test),1))
 
     y_train = y_train.ravel()
     y_test = y_test.ravel()
@@ -31,6 +34,7 @@ def train(x_train, y_train, x_test, y_test, path_fig, path_model):
 
     ## Predicting test results
     y_pred = regressor_SVR.predict(x_test)
+    # print(y_pred, y_test)
 
 
     ## Calculating r2 score
@@ -44,6 +48,7 @@ def train(x_train, y_train, x_test, y_test, path_fig, path_model):
     # plt.savefig(path_fig, dpi=300)
 
     dump(regressor_SVR, path_model) 
+    
 
     return r2_linearSVR
 

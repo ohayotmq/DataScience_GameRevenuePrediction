@@ -22,6 +22,7 @@ import regression_xgb
 def train_model_prediction1(): 
 
     dataset = pd.read_csv('../Data/game_info_cleaned.csv')
+    # print(dataset)
 
     # print(dataset.head())
 
@@ -43,6 +44,9 @@ def train_model_prediction1():
     ## Splitting the dataset into independent and dependent vaiables
     from sklearn.model_selection import train_test_split
     x_train,x_test,y_train,y_test = train_test_split(x,y,test_size=0.2,random_state=0)
+
+    # print(x_train[1])
+    # print(y_train[1])
 
 
     path_fig = '../Figure/prediction1/'

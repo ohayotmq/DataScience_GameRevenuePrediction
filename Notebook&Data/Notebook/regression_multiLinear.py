@@ -6,6 +6,8 @@ import os
 
 def train(x_train, y_train, x_test, y_test, path_fig, path_model):
     ## Training the multiple linear regression on the training set
+
+    
     from sklearn.linear_model import LinearRegression
     regressor_MultiLinear = LinearRegression()
     regressor_MultiLinear.fit(x_train,y_train)
@@ -20,11 +22,11 @@ def train(x_train, y_train, x_test, y_test, path_fig, path_model):
     print(r2_MultiLinear)
 
 
-    path_fig = os.path.join(path_fig, 'regression_multiLinear.png')
+    # path_fig = os.path.join(path_fig, 'regression_multiLinear.png')
     path_model = os.path.join(path_model, 'regression_multiLinear.joblib')
     
 
-    plt.savefig(path_fig, dpi=300)
+    # plt.savefig(path_fig, dpi=300)
 
     dump(regressor_MultiLinear, path_model) 
 

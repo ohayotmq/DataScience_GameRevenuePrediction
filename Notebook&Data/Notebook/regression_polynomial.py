@@ -1,7 +1,8 @@
 import matplotlib.pyplot as plt
 import seaborn as sns
-from joblib import dump
+from joblib import dump, load
 import os
+import numpy as np
 
 
 def train(x_train, y_train, x_test, y_test, path_fig, path_model):
@@ -37,15 +38,14 @@ def train(x_train, y_train, x_test, y_test, path_fig, path_model):
     r2_poly = r2_score(y_test,y_pred)
     print(r2_poly)
 
-
-
     path_fig = os.path.join(path_fig, 'regression_polynomial.png')
     path_model = os.path.join(path_model, 'regression_polynomial.joblib')
     
 
-    # plt.savefig(path_fig, dpi=300)
+    plt.savefig(path_fig, dpi=300)
 
     dump(poly_regressor, path_model) 
+
 
     return r2_poly
 
