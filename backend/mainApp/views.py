@@ -34,13 +34,42 @@ def scrapedGameData(request):
 
 @api_view(['GET'])
 def predict1(request):
-    print('here111')
-    model = joblib.load(globalVar.modelFileName)
+    res = {}
     x = [[float(request.GET.get('NA_sales')),float(request.GET.get('EU_sales')),
-          float(request.GET.get('JP_sales')),float(request.GET.get('otherSales')),
-          int(request.GET.get('releaseMonth')),int(request.GET.get('releaseYear'))]]
-    y = model.predict(x)
-    return JsonResponse({'totalSales': y[0]})
+            float(request.GET.get('JP_sales')),float(request.GET.get('otherSales')),
+            int(request.GET.get('releaseMonth')),int(request.GET.get('releaseYear'))]]
+    for modelName in globalVar.modelFilesName1:
+        model = joblib.load(globalVar.modelFilesName1[modelName])
+        res[modelName] = model.predict(x)[0]
+    return JsonResponse(res)
+
+@api_view(['GET'])
+def predict2(request):
+    res = {}
+    try:
+        console = globalVar.consoleEncoder.transform([request.GET.get('console')])[0]
+    except ValueError:
+        console = -1
+
+    try:
+        genre = globalVar.genreEncoder.transform([request.GET.get('genre')])[0]
+    except ValueError:
+        genre = -1
+    
+    try:
+        publisher = globalVar.publisherEncoder.transform([request.GET.get('publisher')])[0]
+    except ValueError:
+        publisher = -1
+    
+    x = [[console,genre,publisher,
+          float(request.GET.get('NA_sales')),float(request.GET.get('EU_sales')),
+          float(request.GET.get('JP_sales')),
+            ]]
+    for modelName in globalVar.modelFilesName2:
+        model = joblib.load(globalVar.modelFilesName2[modelName])
+        res[modelName] = model.predict(x)[0]
+        print(res[modelName])
+    return JsonResponse(res)
 
 def test(request):
     print('ping test route')

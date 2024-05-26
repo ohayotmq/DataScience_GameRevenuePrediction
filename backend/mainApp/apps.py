@@ -14,5 +14,4 @@ class MainappConfig(AppConfig):
 
         # # repeat after 7 days
         # threading.Timer(3600*24*7, self.ready).start()
-
-        print('hello world')
+        pass
