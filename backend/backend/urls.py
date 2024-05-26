@@ -33,6 +33,7 @@ urlpatterns = [
     path('scraped-data/', views.scrapedGameData),
     path('predict-1/', views.predict1),
     path('predict-2/', views.predict2),
+    path('predict-3/', views.predict3),
 ]
 
 def runScheduledTask():

@@ -4,3 +4,4 @@ modelFilesName2 = {}
 consoleEncoder = None
 genreEncoder = None
 publisherEncoder = None
+regionEncoder = None
