@@ -1,0 +1,7 @@
+*.csv
+*.xlsx
+*.png
+*.joblib
+*.sqlite3
+*.html
+**/__pycache__/
