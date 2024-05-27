@@ -8,7 +8,7 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 import joblib
 import globalVar
-from predict3 import predict3Helper
+from predict3 import predict3Helper, testPredict3
 # Create your views here.
 
 @api_view(['GET'])
@@ -74,6 +74,10 @@ def predict2(request):
 
 @api_view(['GET'])
 def predict3(request):
+    # y = testPredict3(request.GET.get('genre'), request.GET.get('region'), request.GET.get('console'))
+    # print(y)
+    # return JsonResponse({'y':y})
+
     [region_max, console_max, y_max] = predict3Helper(request.GET.get('genre'), request.GET.get('region'), request.GET.get('console'))
     return JsonResponse({'region_max': region_max, 'console_max': console_max, 'revenue_max': y_max})
 

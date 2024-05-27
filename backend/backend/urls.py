@@ -26,6 +26,7 @@ from Step2DataCleaning import dataCleaning
 from Step3EDA import Step3EDA
 from Step4TrainModelPrediction1 import train_model_prediction1
 from Step4TrainModelPrediction2 import train_model_prediction2
+from Step4TrainModelPrediction3 import train_model_prediction3
 
 urlpatterns = [
     path('', views.test),
@@ -44,6 +45,7 @@ def runScheduledTask():
     Step3EDA()
     train_model_prediction1()
     train_model_prediction2()
+    train_model_prediction3()
     globalVar.scrapedFileName = os.path.join(settings.BASE_DIR, './Data/game_info_cleaned.csv')
 
     # huan luyen mo hinh

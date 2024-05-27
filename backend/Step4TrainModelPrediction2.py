@@ -28,10 +28,7 @@ def train_model_prediction2():
     globalVar.consoleEncoder = LabelEncoder()
     globalVar.genreEncoder = LabelEncoder()
     globalVar.publisherEncoder = LabelEncoder()
-    globalVar.regionEncoder = LabelEncoder()
     Dataset
-    globalVar.regionEncoder.fit(Dataset['Region'].astype('str'))
-    Dataset['Region'] = globalVar.regionEncoder.transform(Dataset['Region'].astype('str'))
 
     globalVar.consoleEncoder.fit(Dataset['Console'].astype('str'))
     Dataset['Console'] = globalVar.consoleEncoder.transform(Dataset['Console'].astype('str'))
