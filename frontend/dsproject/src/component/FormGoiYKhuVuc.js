@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Button, Form, Input, Select, Space, Table } from "antd";
-import predictDacTrungGame from "../service/predict_2";
+import { Button, Form, Input, Select, Space, Table, message } from "antd";
+import predictGoiYKhuVuc from "../service/predict_3";
 
 const { Option } = Select;
 const layout = {
@@ -18,90 +18,65 @@ const tailLayout = {
   },
 };
 
-function FormDacTrungGame() {
+function FormGoiYKhuVuc() {
   const [form] = Form.useForm();
   const [tableData, setTableData] = useState([]);
   const [showTable, setShowTable] = useState(false);
 
   const onFinish = async (values) => {
     try {
-      const salesData = {
-        console: values.console,
-        genre: values.genre,
-        publisher: values.publisher,
-        NA_sales: values.NA_sales,
-        EU_sales: values.EU_sales,
-        JP_sales: values.JP_sales,
+      const predictions = await predictGoiYKhuVuc(
+        values.genre,
+        values?.region,
+        values?.console
+      );
+      const newData = {
+        ...values,
+        region_max: predictions.region_max,
+        console_max: predictions.console_max,
+        revenue_max: predictions.revenue_max,
       };
-      const predictions = await predictDacTrungGame(salesData);
-      setTableData((prevData) => [...prevData, { ...values, ...predictions }]);
+      console.log("New data:", newData);
+
+      setTableData((prevData) => [...prevData, newData]);
       setShowTable(true);
       form.resetFields();
     } catch (error) {
+      message.error("Error predicting sales. Please try again later.");
       console.error("Error predicting sales:", error);
     }
   };
 
   const columns = [
     {
-      title: "Console",
-      dataIndex: "console",
-      key: "console",
-    },
-    {
       title: "Genre",
       dataIndex: "genre",
       key: "genre",
     },
     {
-      title: "Publisher",
-      dataIndex: "publisher",
-      key: "publisher",
+      title: "Region",
+      dataIndex: "region",
+      key: "region",
     },
     {
-      title: "NA Sales",
-      dataIndex: "NA_sales",
-      key: "NA_sales",
+      title: "Console",
+      dataIndex: "console",
+      key: "console",
     },
     {
-      title: "EU Sales",
-      dataIndex: "EU_sales",
-      key: "EU_sales",
+      title: "Region Max",
+      dataIndex: "region_max",
+      key: "region_max",
     },
     {
-      title: "JP Sales",
-      dataIndex: "JP_sales",
-      key: "JP_sales",
+      title: "Console Max",
+      dataIndex: "console_max",
+      key: "console_max",
     },
     {
-      title: "Decision Tree",
-      dataIndex: "decisionTree",
-      key: "decisionTree",
-    },
-    {
-      title: "KNN",
-      dataIndex: "knn",
-      key: "knn",
-    },
-    {
-      title: "Multi Linear",
-      dataIndex: "multiLinear",
-      key: "multiLinear",
-    },
-    {
-      title: "Random Forest",
-      dataIndex: "randomForest",
-      key: "randomForest",
-    },
-    {
-      title: "SVR Linear",
-      dataIndex: "svrLinear",
-      key: "svrLinear",
-    },
-    {
-      title: "SVR Non Linear",
-      dataIndex: "svrNonLinear",
-      key: "svrNonLinear",
+      title: "Revenue Max",
+      dataIndex: "revenue_max",
+      key: "revenue_max",
     },
   ];
 
@@ -147,6 +122,8 @@ function FormDacTrungGame() {
     "OSX",
   ];
 
+  const regions = ["JP ", "NA ", "Other ", "PAL "];
+
   return (
     <>
       <Form
@@ -156,24 +133,6 @@ function FormDacTrungGame() {
         onFinish={onFinish}
         style={{ maxWidth: 800, minWidth: 600 }}
       >
-        <Form.Item
-          name="console"
-          label="Console"
-          rules={[
-            {
-              required: true,
-              message: "Please select a console",
-            },
-          ]}
-        >
-          <Select placeholder="Select a console" allowClear>
-            {consoles.map((console) => (
-              <Option key={console} value={console}>
-                {console}
-              </Option>
-            ))}
-          </Select>
-        </Form.Item>
         <Form.Item name="genre" label="Genre" rules={[{ required: true }]}>
           <Select placeholder="Select a genre" allowClear>
             <Option value="Adventure">Adventure</Option>
@@ -199,54 +158,26 @@ function FormDacTrungGame() {
             <Option value="other">Other</Option>
           </Select>
         </Form.Item>
-        <Form.Item
-          name="publisher"
-          label="Publisher"
-          rules={[
-            {
-              required: true,
-              message: "Please enter the publisher",
-            },
-          ]}
-        >
-          <Input />
+        <Form.Item name="region" label="Region">
+          <Select placeholder="Select a region" allowClear>
+            {regions.map((region) => (
+              <Option key={region} value={region}>
+                {region}
+              </Option>
+            ))}
+          </Select>
         </Form.Item>
-        <Form.Item
-          name="NA_sales"
-          label="NA Sales"
-          rules={[
-            {
-              required: true,
-              message: "Please enter NA Sales",
-            },
-          ]}
-        >
-          <Input />
+
+        <Form.Item name="console" label="Console">
+          <Select placeholder="Select a console" allowClear>
+            {consoles.map((console) => (
+              <Option key={console} value={console}>
+                {console}
+              </Option>
+            ))}
+          </Select>
         </Form.Item>
-        <Form.Item
-          name="EU_sales"
-          label="EU Sales"
-          rules={[
-            {
-              required: true,
-              message: "Please enter EU Sales",
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
-        <Form.Item
-          name="JP_sales"
-          label="JP Sales"
-          rules={[
-            {
-              required: true,
-              message: "Please enter JP Sales",
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
+
         <Form.Item {...tailLayout}>
           <Space>
             <Button type="primary" htmlType="submit">
@@ -263,4 +194,4 @@ function FormDacTrungGame() {
   );
 }
 
-export default FormDacTrungGame;
+export default FormGoiYKhuVuc;
