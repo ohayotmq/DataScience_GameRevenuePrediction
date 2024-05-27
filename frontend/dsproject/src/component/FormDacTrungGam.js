@@ -98,12 +98,26 @@ function FormDacTrungGame() {
           <Select
             placeholder="Select a option and change input text above"
             allowClear>
-            <Option value="RPG">RPG</Option>
-            <Option value="Sports">Sports</Option>
             <Option value="Adventure">Adventure</Option>
             <Option value="Action">Action</Option>
-            <Option value="Strategy">Strategy</Option>
+            <Option value="Action-Adventure">Action-Adventure</Option>
+            <Option value="Board Game">Board Game</Option>
+            <Option value="Education">Education</Option>
             <Option value="Fighting">Fighting</Option>
+            <Option value="Misc">Misc</Option>
+            <Option value="MMO">MMO</Option>
+            <Option value="Music">Music</Option>
+            <Option value="Party">Party</Option>
+            <Option value="Platform">Platform</Option>
+            <Option value="Puzzle">Puzzle</Option>
+            <Option value="Racing">Racing</Option>
+            <Option value="Role-Playing">Role-Playing</Option>
+            <Option value="Sandbox">Sandbox</Option>
+            <Option value="Shooter">Shooter</Option>
+            <Option value="Simulation">Simulation</Option>
+            <Option value="Sports">Sports</Option>
+            <Option value="Strategy">Strategy</Option>
+            <Option value="Visual Novel">Visual Novel</Option>
             <Option value="other">other</Option>
           </Select>
         </Form.Item>
