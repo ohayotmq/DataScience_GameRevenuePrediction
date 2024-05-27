@@ -5,3 +5,4 @@
 *.sqlite3
 *.html
 **/__pycache__/
+**/.ipynb_checkpoints/
