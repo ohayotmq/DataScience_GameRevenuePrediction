@@ -42,7 +42,7 @@ def train_model_prediction2():
 
     #extracting the feature vector and the dependant variable vector
 
-    columns = ["Console", "Genre", "Publisher", "NA Sales (m)", "EU Sales (m)","JP Sales (m)"]
+    columns = ["Console", "Genre", "NA Sales (m)", "EU Sales (m)","JP Sales (m)"]
 
 
     y = Dataset["Total Sales (m)"].values
