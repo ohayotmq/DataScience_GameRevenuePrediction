@@ -77,15 +77,15 @@ def train_model_prediction3():
     model_no_publishers.summary()
 
     #third linear model
-    model_publishers= smf.ols('Sales~Genre+Region+Console+Publishers',data=filtered_df).fit()
-    model_publishers.summary()
+    # model_publishers= smf.ols('Sales~Genre+Region+Console+Publishers',data=filtered_df).fit()
+    # model_publishers.summary()
 
 
     path_model_no_publishers = os.path.join(path_model, 'model_no_publishers.joblib')
-    path_model_publishers = os.path.join(path_model, 'model_publishers.joblib')
+    # path_model_publishers = os.path.join(path_model, 'model_publishers.joblib')
 
     dump(model_no_publishers, path_model_no_publishers) 
-    dump(model_publishers, path_model_publishers) 
+    # dump(model_publishers, path_model_publishers) 
 
 
     # sm.stats.anova_lm(model1,model2,model3,model4)
