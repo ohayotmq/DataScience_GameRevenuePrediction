@@ -38,7 +38,7 @@ def train_model_prediction1():
     # Retaining only the useful features of the dataset
     # From the heatmap, we can decipher that the columns NA_Sales,JP_Sales,EU_Sales and Other_Sales are the most useful features
     # in determining the global sales
-    x = dataset.iloc[:,5: -3].values
+    x = dataset.iloc[:,5: ].values
     # print(x[0])
 
     ## Splitting the dataset into independent and dependent vaiables
