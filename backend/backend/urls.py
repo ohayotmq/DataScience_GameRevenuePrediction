@@ -41,9 +41,9 @@ urlpatterns = [
 def runScheduledTask():
     # cao data va luu vao file csv
     print('runScheduledTask')
-    # webScraping()
-    # dataCleaning()
-    # Step3EDA()
+    webScraping()
+    dataCleaning()
+    Step3EDA()
     train_model_prediction1()
     train_model_prediction2()
     train_model_prediction3()
