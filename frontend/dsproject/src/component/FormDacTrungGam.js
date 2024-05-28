@@ -28,7 +28,7 @@ function FormDacTrungGame() {
       const salesData = {
         console: values.console,
         genre: values.genre,
-        publisher: values.publisher,
+        // publisher: values.publisher,
         NA_sales: values.NA_sales,
         EU_sales: values.EU_sales,
         JP_sales: values.JP_sales,
@@ -73,36 +73,46 @@ function FormDacTrungGame() {
       dataIndex: "JP_sales",
       key: "JP_sales",
     },
-    {
-      title: "Decision Tree",
-      dataIndex: "decisionTree",
-      key: "decisionTree",
-    },
-    {
-      title: "KNN",
-      dataIndex: "knn",
-      key: "knn",
-    },
-    {
-      title: "Multi Linear",
-      dataIndex: "multiLinear",
-      key: "multiLinear",
-    },
-    {
-      title: "Random Forest",
-      dataIndex: "randomForest",
-      key: "randomForest",
-    },
-    {
-      title: "SVR Linear",
-      dataIndex: "svrLinear",
-      key: "svrLinear",
-    },
-    {
-      title: "SVR Non Linear",
-      dataIndex: "svrNonLinear",
-      key: "svrNonLinear",
-    },
+    // {
+    //   title: "Decision Tree",
+    //   dataIndex: "decisionTree",
+    //   key: "decisionTree",
+    // },
+    // {
+    //   title: "KNN",
+    //   dataIndex: "knn",
+    //   key: "knn",
+    // },
+    // {
+    //   title: "Multi Linear",
+    //   dataIndex: "multiLinear",
+    //   key: "multiLinear",
+    // },
+    // {
+    //   title: "Random Forest",
+    //   dataIndex: "randomForest",
+    //   key: "randomForest",
+    // },
+    // {
+    //   title: "SVR Linear",
+    //   dataIndex: "svrLinear",
+    //   key: "svrLinear",
+    // },
+    // {
+    //   title: "SVR Non Linear",
+    //   dataIndex: "svrNonLinear",
+    //   key: "svrNonLinear",
+    // },
+
+    
+    { title: "Multi Linear", dataIndex: "multiLinear", key: "multiLinear" },
+    { title: "Polynomial Linear", dataIndex: "polynomial", key: "polynomial" },
+    { title: "KNN", dataIndex: "knn", key: "knn" },
+    { title: "Decision Tree", dataIndex: "decisionTree", key: "decisionTree" },
+    { title: "Random Forest", dataIndex: "randomForest", key: "randomForest" },
+    { title: "SVR Linear", dataIndex: "svrLinear", key: "svrLinear" },
+    { title: "SVR Non Linear", dataIndex: "svrNonLinear", key: "svrNonLinear" },
+    { title: "XGB", dataIndex: "xgb", key: "xgb" },
   ];
 
   const consoles = [

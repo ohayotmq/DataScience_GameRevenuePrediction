@@ -27,7 +27,7 @@ def train(x_train, y_train, x_test, y_test, path_fig, path_model):
 
 
     # Training the KNN model on the training set
-    regressor_knn = KNeighborsRegressor(n_neighbors=7)
+    regressor_knn = KNeighborsRegressor(n_neighbors=4)
     regressor_knn.fit(x_train,y_train)
     y_pred = regressor_knn.predict(x_test)
     r2_knn = r2_score(y_test,y_pred)

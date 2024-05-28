@@ -23,9 +23,9 @@ function FormDoanhSo() {
         NA_sales: values.NARevenue,
         EU_sales: values.EURevenue,
         JP_sales: values.JPRevenue,
-        otherSales: values.otherSales || 0,
-        releaseMonth: values.releaseMonth || new Date().getMonth() + 1,
-        releaseYear: values.releaseYear || new Date().getFullYear(),
+        // otherSales: values.otherSales || 0,
+        // releaseMonth: values.releaseMonth || new Date().getMonth() + 1,
+        // releaseYear: values.releaseYear || new Date().getFullYear(),
       };
 
       const predictions = await predictSales(salesData);
@@ -52,12 +52,14 @@ function FormDoanhSo() {
     { title: "Other Sales", dataIndex: "otherSales", key: "otherSales" },
     { title: "Release Month", dataIndex: "releaseMonth", key: "releaseMonth" },
     { title: "Release Year", dataIndex: "releaseYear", key: "releaseYear" },
-    { title: "Decision Tree", dataIndex: "decisionTree", key: "decisionTree" },
-    { title: "KNN", dataIndex: "knn", key: "knn" },
     { title: "Multi Linear", dataIndex: "multiLinear", key: "multiLinear" },
+    { title: "Polynomial Linear", dataIndex: "polynomial", key: "polynomial" },
+    { title: "KNN", dataIndex: "knn", key: "knn" },
+    { title: "Decision Tree", dataIndex: "decisionTree", key: "decisionTree" },
     { title: "Random Forest", dataIndex: "randomForest", key: "randomForest" },
     { title: "SVR Linear", dataIndex: "svrLinear", key: "svrLinear" },
     { title: "SVR Non Linear", dataIndex: "svrNonLinear", key: "svrNonLinear" },
+    { title: "XGB", dataIndex: "xgb", key: "xgb" },
   ];
 
   return (

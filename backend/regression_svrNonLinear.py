@@ -1,4 +1,6 @@
 import numpy as np
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import seaborn as sns
 from joblib import dump
@@ -26,7 +28,7 @@ def train(x_train, y_train, x_test, y_test, path_fig, path_model):
 
     ## Training the Non-linear SVR model on the training set
     from sklearn.svm import SVR
-    regressor_NonLinearSVR = SVR(kernel='rbf')
+    regressor_NonLinearSVR = SVR(kernel='rbf',degree=4,gamma='auto')
     regressor_NonLinearSVR.fit(x_train,y_train)
 
 

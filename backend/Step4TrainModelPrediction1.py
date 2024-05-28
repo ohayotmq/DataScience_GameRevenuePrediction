@@ -1,5 +1,7 @@
 ## Importing the libraries
 import pandas as pd
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sns
@@ -37,7 +39,7 @@ def train_model_prediction1():
     # Retaining only the useful features of the dataset
     # From the heatmap, we can decipher that the columns NA_Sales,JP_Sales,EU_Sales and Other_Sales are the most useful features
     # in determining the global sales
-    x = dataset.iloc[:,5: ].values
+    x = dataset.iloc[:,5: -3].values
     # print(x[0])
 
     ## Splitting the dataset into independent and dependent vaiables
@@ -84,6 +86,8 @@ def train_model_prediction1():
     plt.savefig(path_fig, dpi=300)
 
     listModel = ['regression_multiLinear', 'regression_polynomial', 'regression_knn', 'regression_decisionTree', 'regression_randomForest', 'regression_svrLinear', 'regression_svrNonLinear', 'regression_xgb']
+
+    print("Done train model prediction 1")
 
     return listModel
 

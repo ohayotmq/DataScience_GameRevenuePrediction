@@ -1,4 +1,6 @@
 import numpy as np
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import seaborn as sns
 from joblib import dump
@@ -25,7 +27,7 @@ def train(x_train, y_train, x_test, y_test, path_fig, path_model):
 
     ## Training the Linear SVR model on the training set
     from sklearn.svm import SVR
-    regressor_SVR = SVR(kernel='linear')
+    regressor_SVR = SVR(kernel='linear',degree=4,gamma='auto')
     regressor_SVR.fit(x_train,y_train)
 
 

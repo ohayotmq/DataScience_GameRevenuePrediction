@@ -39,8 +39,10 @@ def scrapedGameData(request):
 def predict1(request):
     res = {}
     x = [[float(request.GET.get('NA_sales')),float(request.GET.get('EU_sales')),
-            float(request.GET.get('JP_sales')),float(request.GET.get('otherSales')),
-            int(request.GET.get('releaseMonth')),int(request.GET.get('releaseYear'))]]
+            float(request.GET.get('JP_sales')),
+            # float(request.GET.get('otherSales')),
+            # int(request.GET.get('releaseMonth')),int(request.GET.get('releaseYear'))
+            ]]
     for modelName in globalVar.modelFilesName1:
         model = joblib.load(globalVar.modelFilesName1[modelName])
         if modelName == 'polynomial':
@@ -48,9 +50,9 @@ def predict1(request):
             res[modelName] = float(model.predict(poly_reg.fit_transform(x))[0])
         elif modelName == 'xgb':
             print(modelName)
-            sc_x1 = StandardScaler()
-            x_new = sc_x1.fit_transform(x)
-            res[modelName] = float(model.predict(x_new)[0])
+            # sc_x1 = StandardScaler()
+            # x_new = sc_x1.fit_transform(x)
+            res[modelName] = float(model.predict(x)[0])
         else:
             res[modelName] = model.predict(x)[0]
     return JsonResponse(res)
@@ -68,12 +70,13 @@ def predict2(request):
     except ValueError:
         genre = -1
     
-    try:
-        publisher = globalVar.publisherEncoder.transform([request.GET.get('publisher')])[0]
-    except ValueError:
-        publisher = -1
+    # try:
+    #     publisher = globalVar.publisherEncoder.transform([request.GET.get('publisher')])[0]
+    # except ValueError:
+    #     publisher = -1
     
-    x = [[console,genre,publisher,
+    x = [[console,genre,
+        #   publisher,
           float(request.GET.get('NA_sales')),float(request.GET.get('EU_sales')),
           float(request.GET.get('JP_sales')),
             ]]
@@ -84,9 +87,9 @@ def predict2(request):
             res[modelName] = float(model.predict(poly_reg.fit_transform(x))[0])
         elif modelName == 'xgb':
             print(modelName)
-            sc_x1 = StandardScaler()
-            x_new = sc_x1.fit_transform(x)
-            res[modelName] = float(model.predict(x_new)[0])
+            # sc_x1 = StandardScaler()
+            # x_new = sc_x1.fit_transform(x)
+            res[modelName] = float(model.predict(x)[0])
         else:
             res[modelName] = model.predict(x)[0]
     return JsonResponse(res)

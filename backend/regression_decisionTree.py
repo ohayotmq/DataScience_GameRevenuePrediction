@@ -11,7 +11,7 @@ def train(x_train, y_train, x_test, y_test, path_fig, path_model):
     from sklearn.metrics import r2_score
 
 
-    regressor_Tree = DecisionTreeRegressor(min_samples_leaf=30)
+    regressor_Tree = DecisionTreeRegressor(min_samples_leaf=20)
     regressor_Tree.fit(x_train,y_train)
 
 

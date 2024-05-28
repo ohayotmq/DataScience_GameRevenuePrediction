@@ -1,3 +1,5 @@
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import seaborn as sns
 from joblib import dump
@@ -26,7 +28,7 @@ def train(x_train, y_train, x_test, y_test, path_fig, path_model):
 
 
     # Training the Random Forest regression on the training model
-    regressor_Forest = RandomForestRegressor(n_estimators=100,random_state=0)
+    regressor_Forest = RandomForestRegressor(n_estimators=300,random_state=0)
     regressor_Forest.fit(x_train,y_train)
     y_pred = regressor_Forest.predict(x_test)
     r2_forest = r2_score(y_test,y_pred)

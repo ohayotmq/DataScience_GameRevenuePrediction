@@ -5,7 +5,7 @@ import pandas as pd
 def predict3Helper(genre, region, console):
     # load model
     model = joblib.load('Model/prediction3/model_no_publishers.joblib')
-    allRegions = ['JP ', 'NA ', 'Other ', 'PAL ']
+    allRegions = ['JP', 'NA', 'Other', 'PAL']
     allConsoles = ['PS', 'X360', 'PS3', 'DS', 'Wii', 'PS2', 'GBA', 'PC', 'PS4', 'GBC', 'PSV', 'PSP',
             'XB', '3DS', 'SNES', 'GC', 'XOne', 'SAT', 'NS', 'GB', 'DC', 'WiiU', 'N64', 'PSN',
             'PCE', 'GEN', '3DO', 'NES', '2600', 'XBL', 'NG', 'WW', 'SCD', 'Mob', 'GG', 'VC', 'WS',

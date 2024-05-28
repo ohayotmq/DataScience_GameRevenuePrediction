@@ -1,5 +1,7 @@
 ## Importing the libraries
 import pandas as pd
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sns
@@ -42,7 +44,7 @@ def train_model_prediction2():
 
     #extracting the feature vector and the dependant variable vector
 
-    columns = ["Console", "Genre", "Publisher", "NA Sales (m)", "EU Sales (m)","JP Sales (m)"]
+    columns = ["Console", "Genre", "NA Sales (m)", "EU Sales (m)","JP Sales (m)"]
 
 
     y = Dataset["Total Sales (m)"].values
@@ -96,6 +98,7 @@ def train_model_prediction2():
 
     listModel = ['regression_multiLinear', 'regression_polynomial', 'regression_knn', 'regression_decisionTree', 'regression_randomForest', 'regression_svrLinear', 'regression_svrNonLinear', 'regression_xgb']
 
+    print("Done train model prediction 2")
     return listModel
 
 

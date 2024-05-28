@@ -1,5 +1,7 @@
 ## Importing the libraries
 import pandas as pd
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sns
@@ -42,7 +44,7 @@ def train_model_prediction3():
     filtered_df = df2.pipe(pd.melt, id_vars=['Console', 'Publishers', 'Genre', 'Release Date'], 
                         value_vars=['NA Sales','PAL Sales','JP Sales','Other Sales'], 
                         var_name='Region', value_name='Sales')\
-                    .assign(Region=lambda df2: df2.Region.str.strip('_Sales'))
+                    .assign(Region=lambda df2: df2.Region.str.strip(' _Sales'))
 
     filtered_df
 

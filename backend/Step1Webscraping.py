@@ -121,7 +121,7 @@ def webScraping():
 
     # DEPLOY: change this
     # for page in range(0, len(genre_page)):
-    for page in range(0, 1):
+    for page in range(0, len(genre_page)):
         print('Scraping Page ' + str(page+1) + '...')
         
         base_site = base_site_1 + genre_page[page] + base_site_2

@@ -122,7 +122,7 @@ function FormGoiYKhuVuc() {
     "OSX",
   ];
 
-  const regions = ["JP ", "NA ", "Other ", "PAL "];
+  const regions = ["JP", "NA", "Other", "PAL"];
 
   return (
     <>
@@ -159,7 +159,7 @@ function FormGoiYKhuVuc() {
           </Select>
         </Form.Item>
         <Form.Item name="region" label="Region">
-          <Select placeholder="Select a region" allowClear>
+          <Select placeholder="Select a region">
             {regions.map((region) => (
               <Option key={region} value={region}>
                 {region}
@@ -169,7 +169,7 @@ function FormGoiYKhuVuc() {
         </Form.Item>
 
         <Form.Item name="console" label="Console">
-          <Select placeholder="Select a console" allowClear>
+          <Select placeholder="Select a console">
             {consoles.map((console) => (
               <Option key={console} value={console}>
                 {console}
