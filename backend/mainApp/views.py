@@ -6,9 +6,11 @@ from django.http import JsonResponse
 from rest_framework.decorators import api_view
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
+from sklearn.preprocessing import StandardScaler
 import joblib
 import globalVar
 from predict3 import predict3Helper, testPredict3
+from sklearn.preprocessing import PolynomialFeatures
 # Create your views here.
 
 @api_view(['GET'])
@@ -41,7 +43,16 @@ def predict1(request):
             int(request.GET.get('releaseMonth')),int(request.GET.get('releaseYear'))]]
     for modelName in globalVar.modelFilesName1:
         model = joblib.load(globalVar.modelFilesName1[modelName])
-        res[modelName] = model.predict(x)[0]
+        if modelName == 'polynomial':
+            poly_reg = PolynomialFeatures(degree=2)
+            res[modelName] = float(model.predict(poly_reg.fit_transform(x))[0])
+        elif modelName == 'xgb':
+            print(modelName)
+            sc_x1 = StandardScaler()
+            x_new = sc_x1.fit_transform(x)
+            res[modelName] = float(model.predict(x_new)[0])
+        else:
+            res[modelName] = model.predict(x)[0]
     return JsonResponse(res)
 
 @api_view(['GET'])
@@ -68,8 +79,16 @@ def predict2(request):
             ]]
     for modelName in globalVar.modelFilesName2:
         model = joblib.load(globalVar.modelFilesName2[modelName])
-        res[modelName] = model.predict(x)[0]
-        print(res[modelName])
+        if modelName == 'polynomial':
+            poly_reg = PolynomialFeatures(degree=2)
+            res[modelName] = float(model.predict(poly_reg.fit_transform(x))[0])
+        elif modelName == 'xgb':
+            print(modelName)
+            sc_x1 = StandardScaler()
+            x_new = sc_x1.fit_transform(x)
+            res[modelName] = float(model.predict(x_new)[0])
+        else:
+            res[modelName] = model.predict(x)[0]
     return JsonResponse(res)
 
 @api_view(['GET'])

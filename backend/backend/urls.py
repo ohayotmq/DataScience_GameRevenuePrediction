@@ -19,6 +19,7 @@ from django.urls import path
 from mainApp import views
 import os
 from django.conf import settings
+
 import threading
 import globalVar
 from Step1Webscraping import webScraping
@@ -40,9 +41,9 @@ urlpatterns = [
 def runScheduledTask():
     # cao data va luu vao file csv
     print('runScheduledTask')
-    webScraping()
-    dataCleaning()
-    Step3EDA()
+    # webScraping()
+    # dataCleaning()
+    # Step3EDA()
     train_model_prediction1()
     train_model_prediction2()
     train_model_prediction3()
@@ -52,20 +53,20 @@ def runScheduledTask():
     globalVar.modelFilesName1['decisionTree'] = os.path.join(settings.BASE_DIR, 'Model/prediction1/regression_decisionTree.joblib')
     globalVar.modelFilesName1['knn'] = os.path.join(settings.BASE_DIR, 'Model/prediction1/regression_knn.joblib')
     globalVar.modelFilesName1['multiLinear'] = os.path.join(settings.BASE_DIR, 'Model/prediction1/regression_multiLinear.joblib')
-    # globalVar.modelFilesName1['polynomial'] = os.path.join(settings.BASE_DIR, 'Model/prediction1/regression_polynomial.joblib')
+    globalVar.modelFilesName1['polynomial'] = os.path.join(settings.BASE_DIR, 'Model/prediction1/regression_polynomial.joblib')
     globalVar.modelFilesName1['randomForest'] = os.path.join(settings.BASE_DIR, 'Model/prediction1/regression_randomForest.joblib')
     globalVar.modelFilesName1['svrLinear'] = os.path.join(settings.BASE_DIR, 'Model/prediction1/regression_svrLinear.joblib')
     globalVar.modelFilesName1['svrNonLinear'] = os.path.join(settings.BASE_DIR, 'Model/prediction1/regression_svrNonLinear.joblib')
-    # globalVar.modelFilesName1['xgb'] = os.path.join(settings.BASE_DIR, 'Model/prediction1/regression_xgb.joblib')
+    globalVar.modelFilesName1['xgb'] = os.path.join(settings.BASE_DIR, 'Model/prediction1/regression_xgb.joblib')
 
     globalVar.modelFilesName2['decisionTree'] = os.path.join(settings.BASE_DIR, 'Model/prediction2/regression_decisionTree.joblib')
     globalVar.modelFilesName2['knn'] = os.path.join(settings.BASE_DIR, 'Model/prediction2/regression_knn.joblib')
     globalVar.modelFilesName2['multiLinear'] = os.path.join(settings.BASE_DIR, 'Model/prediction2/regression_multiLinear.joblib')
-    # globalVar.modelFilesName2['polynomial'] = os.path.join(settings.BASE_DIR, 'Model/prediction2/regression_polynomial.joblib')
+    globalVar.modelFilesName2['polynomial'] = os.path.join(settings.BASE_DIR, 'Model/prediction2/regression_polynomial.joblib')
     globalVar.modelFilesName2['randomForest'] = os.path.join(settings.BASE_DIR, 'Model/prediction2/regression_randomForest.joblib')
     globalVar.modelFilesName2['svrLinear'] = os.path.join(settings.BASE_DIR, 'Model/prediction2/regression_svrLinear.joblib')
     globalVar.modelFilesName2['svrNonLinear'] = os.path.join(settings.BASE_DIR, 'Model/prediction2/regression_svrNonLinear.joblib')
-    # globalVar.modelFilesName2['xgb'] = os.path.join(settings.BASE_DIR, 'Model/prediction2/regression_xgb.joblib')
+    globalVar.modelFilesName2['xgb'] = os.path.join(settings.BASE_DIR, 'Model/prediction2/regression_xgb.joblib')
 
 
     # repeat after 7 days
